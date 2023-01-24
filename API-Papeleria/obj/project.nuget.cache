@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "oeWqgk+agQyngOR92cNtjZIYTm2yep46fG/jbN1KrsRRJpVzuUFV+hE0iFaNFal5ww7cDCOeecUpnfI69d6bgA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\API-Papeleria\\API-Papeleria.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mctri\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\mctri\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\mctri\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\mctri\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\mctri\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\mctri\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
