@@ -195,7 +195,9 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_IdPersona",
                 table: "Clientes",
-                column: "IdPersona");
+                column: "IdPersona",
+                unique: true,
+                filter: "[IdPersona] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_IdRol",
@@ -220,7 +222,8 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_IdPersona",
                 table: "Usuarios",
-                column: "IdPersona");
+                column: "IdPersona",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_IdRol",

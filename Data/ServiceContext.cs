@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -23,7 +22,7 @@ namespace Data
         public DbSet<UsuarioItem> Usuarios { get; set; }
         public DbSet<ClienteItem> Clientes { get; set; }
         public DbSet<RolItem> Roles { get; set; }
-        public DbSet<TipoClienteItem> TipoCliente { get; set; }
+        public DbSet<TipoClienteItem> TiposClientes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ProductoItem>()
@@ -43,6 +42,7 @@ namespace Data
             {
                 usuario.ToTable("Usuarios");
                 usuario.HasOne<PersonaItem>().WithMany().HasForeignKey(u => u.IdPersona);
+                usuario.HasIndex(c => c.IdPersona).IsUnique();
                 usuario.HasOne<RolItem>().WithMany().HasForeignKey(u => u.IdRol);
 
             });
@@ -78,10 +78,7 @@ namespace Data
 
             return new ServiceContext(optionsBuilder.Options);
         }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        }
+
     }
 
     

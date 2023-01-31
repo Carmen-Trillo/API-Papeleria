@@ -253,7 +253,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPersona");
+                    b.HasIndex("IdPersona")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -281,7 +282,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("IdPersona");
+                    b.HasIndex("IdPersona")
+                        .IsUnique()
+                        .HasFilter("[IdPersona] IS NOT NULL");
 
                     b.HasIndex("IdRol");
 

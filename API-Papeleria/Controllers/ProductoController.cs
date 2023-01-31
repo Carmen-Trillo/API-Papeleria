@@ -19,26 +19,46 @@ namespace APIService.Controllers
             _productoServices = productoServices;
         }
 
-        [HttpPost(Name = "InsertProducto")]
-        public int Post([FromBody] ProductoItem productoItem)
+        [HttpPost(Name = "InsertarProducto")]
+        public int Post([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] ProductoItem productoItem)
         {
-            //     _userService.ValidateCredentials(usuarioItem);
-            return _productoServices.InsertProducto(productoItem);
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _productoServices.InsertProducto(productoItem);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
         }
 
-        [HttpGet(Name = "GetAllProductos")]
-        public List<ProductoItem> GetAll()
+        [HttpGet(Name = "VerProductos")]
+        public List<ProductoItem> GetAllProductos([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword)
         {
-            //     _userService.ValidateCredentials(usuarioItem);
-            return _productoServices.GetAllProductos();
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _productoServices.GetAllProductos();
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
         }
 
-        [HttpGet(Name = "GetProductosByCriteria")]
-        public List<ProductoItem> GetByCriteria(bool isActive)
+        [HttpGet(Name = "MostrarProductosPorFiltro")]
+        public List<ProductoItem> GetProductosByCriteria([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] ProductoFilter productoFilter)
         {
-            var productoFilter = new ProductoFilter();
-            productoFilter.IsActive = isActive;
-            return _productoServices.GetProductosByCriteria(productoFilter);
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _productoServices.GetProductosByCriteria(productoFilter);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
         }
 
         [HttpPatch(Name = "ModificarProducto")]

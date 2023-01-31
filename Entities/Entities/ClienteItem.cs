@@ -15,6 +15,8 @@ namespace Entities.Entities
         public string Empresa { get; set; }
         public string Sector { get; set; }
         public bool IsActive { get; set; }
+        public DateTime InsertDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
     }
 }
