@@ -13,7 +13,7 @@ using Logic.Logic;
     }
     public int InsertProducto(ProductoItem productoItem)
     {
-        _productoLogic.InsertProductoItem(productoItem);
+        _productoLogic.InsertProducto(productoItem);
         return productoItem.Id;
     }
     public List<ProductoItem> GetAllProductos()
@@ -23,6 +23,16 @@ using Logic.Logic;
     public List<ProductoItem> GetProductosByCriteria(ProductoFilter productoFilter)
     {
         return _productoLogic.GetProductosByCriteria(productoFilter);
+    }
+
+    public void UpdateProducto(ProductoItem productoItem)
+    {
+        _productoLogic.UpdateProducto(productoItem);
+    }
+
+    public void DeleteProducto(int id)
+    {
+        _productoLogic.DeleteProducto(id);
     }
 }
 

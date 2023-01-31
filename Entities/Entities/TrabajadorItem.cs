@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Entities.Entities
 {
-    public class TrabajadorItem: UsuarioItem
+    public class TrabajadorItem: PersonaItem
     {
-        public int Id { get; set; }
-        public decimal Salary { get; set; }
+        public TrabajadorItem() { }
+        public int idUsuario { get; set; }
+        public string Puesto { get; set; }
+        public decimal Salario { get; set; }
         public int IdRol { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

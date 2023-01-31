@@ -8,14 +8,17 @@ namespace Entities.Entities
 {
     public class UsuarioItem
     {
-        public UsuarioItem() { }
+
         public int Id { get; set; }
-        public Guid IdWeb { get; set; }
-        public string DNI { get; set; }
-        public string Nombre { get; set; }
-        public string Apellidos { get; set; }
-        public DateTime FechaNacimiento { get; set; }
+        public int IdPersona { get; set; }
+        public int IdRol { get; set; }
+        public int IdTipoCliente { get; set; }
+        public string Usuario { get; set; }
+        public string Password { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public bool IsActive { get; set; }
+
+
     }
 }

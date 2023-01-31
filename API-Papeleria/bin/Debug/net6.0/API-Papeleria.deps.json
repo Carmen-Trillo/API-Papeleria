@@ -10,6 +10,7 @@
         "dependencies": {
           "Entities": "1.0.0",
           "Logic": "1.0.0",
+          "Resource": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
@@ -531,6 +532,14 @@
           }
         }
       },
+      "Mvc2Futures/2.0.50217": {
+        "runtime": {
+          "lib/Microsoft.Web.Mvc.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.50217.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.2.3": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "3.0.0",
@@ -849,6 +858,15 @@
         },
         "runtime": {
           "Logic.dll": {}
+        }
+      },
+      "Resource/1.0.0": {
+        "dependencies": {
+          "Entities": "1.0.0",
+          "Mvc2Futures": "2.0.50217"
+        },
+        "runtime": {
+          "Resource.dll": {}
         }
       }
     }
@@ -1181,6 +1199,13 @@
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
     },
+    "Mvc2Futures/2.0.50217": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-90ilYxgj4s82mfgVegs6NujfBw5zbR49SlIWW/vtjRXu6Trdi9W1xh/LlHu6or47IeBI2AhGKsqnfm7HFCBBlA==",
+      "path": "mvc2futures/2.0.50217",
+      "hashPath": "mvc2futures.2.0.50217.nupkg.sha512"
+    },
     "Swashbuckle.AspNetCore/6.2.3": {
       "type": "package",
       "serviceable": true,
@@ -1430,6 +1455,11 @@
       "sha512": ""
     },
     "Logic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Resource/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

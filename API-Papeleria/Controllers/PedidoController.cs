@@ -1,27 +1,97 @@
 ﻿using API_Papeleria.Controllers;
 using API_Papeleria.IServices;
+using API_Papeleria.Services;
 using APIService.Controllers;
 using Entities.Entities;
+using Entities.SearchFilters;
 using Microsoft.AspNetCore.Mvc;
+using Resource.RequestModels;
+using System.Security.Authentication;
 
 namespace API_Papeleria.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class PedidoController : ControllerBase
     {
-        private readonly ILogger<ProductoController> _logger;
-        private readonly IPedidoServices _pedidoService;
-        public PedidoController(ILogger<ProductoController> logger, IPedidoServices pedidoService)
+        private ISecurityServices _securityServices;
+        private IPedidoServices _pedidoServices;
+        public PedidoController(ISecurityServices securityServices, IPedidoServices pedidoServices)
         {
-            _logger = logger;
-            _pedidoService = pedidoService;
+            _securityServices = securityServices;
+            _pedidoServices = pedidoServices;
         }
 
-        [HttpPost(Name = "InsertPedido")]
-        public int Post([FromBody] PedidoItem pedidoItem)
+        [HttpPost(Name = "InsertarPedido")]
+        public int Post([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] PedidoItem pedidoItem)
         {
-            return _pedidoService.InsertPedido(pedidoItem);
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.InsertPedido(pedidoItem);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
         }
+
+        [HttpGet(Name = "VerPedidos")]
+        public List<PedidoItem> GetAllPedidos([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetAllPedidos();
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpGet(Name = "MostrarPedidosPorFiltro")]
+        public List<PedidoItem> GetPedidosByCriteria([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] PedidoFilter pedidoFilter)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetPedidosByCriteria(pedidoFilter);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpPatch(Name = "ModificarPedido")]
+        public void Patch([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] PedidoItem pedidoItem)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                _pedidoServices.UpdatePedido(pedidoItem);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpDelete(Name = "EliminarPedido")]
+        public void Delete([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] int id)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                _pedidoServices.DeletePedido(id);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        
     }
 }

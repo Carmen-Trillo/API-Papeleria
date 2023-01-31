@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VVSK92LMGuIogki2yhuuOBpfhse3k1EBR0Oa3uxVOw9W1dpyQzzVITB2FlPxUWGNwUKUmR79Ac70sRMpaA19Kg==",
+  "dgSpecHash": "1K4Sz0iK4HQCIST+AACP/2VWYRzWwIuSQOd8giHB/YPXQdyeZbXlq1c0ERb0w8PHg8Sp9VVpicWXAenhLiMHZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Data\\Data.csproj",
+  "projectFilePath": "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Data\\Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mctri\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\mctri\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

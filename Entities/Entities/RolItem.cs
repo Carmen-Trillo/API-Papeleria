@@ -8,7 +8,9 @@ namespace Entities.Entities
 {
     public class RolItem
     {
+        public RolItem() { }
         public int Id { get; set; }
         public string TipoRol { get; set; }
+        public bool IsActive { get; set; }
     }
 }

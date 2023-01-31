@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\Entities.csproj": {}
+    "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\Entities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\Entities.csproj": {
+    "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
+        "projectPath": "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
         "packagesPath": "C:\\Users\\mctri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\obj\\",
+        "outputPath": "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mctri\\AppData\\Roaming\\NuGet\\NuGet.Config",

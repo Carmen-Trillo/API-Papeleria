@@ -9,9 +9,10 @@ namespace Entities.SearchFilters
     public class ProductoFilter
     {
         public bool IsActive { get; set; }
-        public DateTime InsertDateFrom { get; set; }
-        public DateTime InsertDateTo { get; set; }
-        public decimal PrecioDesde { get; set; }
-        public decimal PrecioHasta { get; set; }
+        public DateTime? InsertDateFrom { get; set; }
+        public DateTime? InsertDateTo { get; set; }
+        public int? PrecioDesde { get; set; }
+        public int? PrecioHasta { get; set; }
+        public string? Marca { get; set; }
     }
 }

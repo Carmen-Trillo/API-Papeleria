@@ -22,23 +22,6 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.Entities.ClienteRolItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("TipoRol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles", (string)null);
-                });
-
             modelBuilder.Entity("Entities.Entities.PedidoItem", b =>
                 {
                     b.Property<int>("Id")
@@ -59,26 +42,95 @@ namespace Data.Migrations
                     b.Property<DateTime>("FechaPedido")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("IdWeb")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ImporteTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("Pagado")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProductoId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProducto");
+
+                    b.ToTable("Pedidos", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Entities.PersonaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CódigoPostal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DNI")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dirección")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IdWeb")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Población")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Provincia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teléfono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductoId");
+                    b.ToTable("Personas", (string)null);
 
-                    b.ToTable("Pedidos", (string)null);
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Entities.Entities.ProductoItem", b =>
@@ -116,6 +168,9 @@ namespace Data.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -132,13 +187,36 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("TipoRol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClientesRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Entities.TipoClienteItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TipoRol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoClientes", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Entities.UsuarioItem", b =>
@@ -149,73 +227,53 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Apellidos")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdPersona")
+                        .HasColumnType("int");
 
-                    b.Property<string>("DNI")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdRol")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IdWeb")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdTipoCliente")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nombre")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Usuarios", (string)null);
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("Entities.Entities.ClienteItem", b =>
-                {
-                    b.HasBaseType("Entities.Entities.UsuarioItem");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdRol")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdRolItem")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Socio")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Usuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Clientes", (string)null);
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Entities.TrabajadorItem", b =>
                 {
-                    b.HasBaseType("Entities.Entities.UsuarioItem");
+                    b.HasBaseType("Entities.Entities.PersonaItem");
 
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Salary")
+                    b.Property<string>("Puesto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Salario")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
 
                     b.ToTable("Trabajadores", (string)null);
                 });
@@ -224,23 +282,14 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Entities.ProductoItem", null)
                         .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Entities.ClienteItem", b =>
-                {
-                    b.HasOne("Entities.Entities.UsuarioItem", null)
-                        .WithOne()
-                        .HasForeignKey("Entities.Entities.ClienteItem", "Id")
+                        .HasForeignKey("IdProducto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Entities.TrabajadorItem", b =>
                 {
-                    b.HasOne("Entities.Entities.UsuarioItem", null)
+                    b.HasOne("Entities.Entities.PersonaItem", null)
                         .WithOne()
                         .HasForeignKey("Entities.Entities.TrabajadorItem", "Id")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,6 +1,8 @@
 ﻿using API_Papeleria.IServices;
 using Entities.Entities;
+using Entities.SearchFilters;
 using Logic.ILogic;
+using Logic.Logic;
 
 namespace API_Papeleria.Services
 {
@@ -11,10 +13,31 @@ namespace API_Papeleria.Services
         {
             _pedidoLogic = pedidoLogic;
         }
+
+        public void DeletePedido(int id)
+        {
+            _pedidoLogic.DeletePedido(id);
+        }
+
+        public List<PedidoItem> GetAllPedidos()
+        {
+            return _pedidoLogic.GetAllPedidos();
+        }
+
+        public List<PedidoItem> GetPedidosByCriteria(PedidoFilter pedidoFilter)
+        {
+            return _pedidoLogic.GetPedidosByCriteria(pedidoFilter);
+        }
+
         public int InsertPedido(PedidoItem pedidoItem)
         {
-            _pedidoLogic.InsertPedidoItem(pedidoItem);
+            _pedidoLogic.InsertPedido(pedidoItem);
             return pedidoItem.Id;
+        }
+
+        public void UpdatePedido(PedidoItem pedidoItem)
+        {
+            _pedidoLogic.UpdatePedido(pedidoItem);
         }
     }
 }

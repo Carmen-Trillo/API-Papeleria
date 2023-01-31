@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vm2yRr1Gy/lKYqrioSYjvsr2GbAG13U1O9QHMlV81Quuspn40vn4QRhMjJAiWarNWjNhUlsjYg3boUrFM11YzA==",
+  "dgSpecHash": "5xHPqVtlqApdL3H6RQ6SJXyAWeHLMk+oo5vkQ++v4E409T0XE5Hqj2i4jSMnz5xpNpGG8RDVcCv6SbnX8M4EcA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mctri\\FactoriaF5-proyectos\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
+  "projectFilePath": "C:\\Users\\mctri\\FactoriaF5-FemCoder\\proyectos\\API-Papeleria\\Entities\\Entities.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mctri\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\mctri\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

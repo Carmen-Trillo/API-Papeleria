@@ -10,8 +10,11 @@ namespace Logic.ILogic
 {
     public interface IProductoLogic
     {
+        int InsertProducto(ProductoItem productoItem);
+        void UpdateProducto(ProductoItem productoItem);
+        void DeleteProducto(int id);
+        void DeleteProductoMarca(string Marca);
         List<ProductoItem> GetAllProductos();
         List<ProductoItem> GetProductosByCriteria(ProductoFilter productoFilter);
-        void InsertProductoItem(ProductoItem productoItem);
     }
 }

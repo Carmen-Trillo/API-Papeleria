@@ -17,11 +17,11 @@ namespace Data
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductoItem> Productos { get; set; }
         public DbSet<PedidoItem> Pedidos { get; set; }
+        public DbSet<PersonaItem> Personas { get; set; }
         public DbSet<UsuarioItem> Usuarios { get; set; }
-        public DbSet<ClienteItem> Clientes { get; set; }
         public DbSet<TrabajadorItem> Trabajadores { get; set; }
         public DbSet<RolItem> Roles { get; set; }
-        public DbSet<ClienteRolItem> ClientesRoles { get; set; }
+        public DbSet<TipoClienteItem> TipoCliente { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ProductoItem>()
@@ -31,22 +31,27 @@ namespace Data
             .ToTable("Pedidos")
             .HasOne<ProductoItem>()
             .WithMany()
-            .HasForeignKey(o => o.ProductoId);
+            .HasForeignKey(o => o.IdProducto);
 
-            builder.Entity<UsuarioItem>()
-            .ToTable("Usuarios");
+            builder.Entity<PersonaItem>()
+            .ToTable("Personas");
 
-            builder.Entity<ClienteItem>()
-            .ToTable("Clientes");
+            builder.Entity<UsuarioItem>(usuario =>
+            {
+                usuario.ToTable("Usuarios");
+                usuario.HasOne<PersonaItem>().WithMany().HasForeignKey(u => u.IdPersona);
+                usuario.HasOne<RolItem>().WithMany().HasForeignKey(u => u.IdRol);
+                //usuario.HasOne<TipoClienteItem>().WithMany().HasForeignKey(u => u.IdTipoCliente);
+            });
 
             builder.Entity<TrabajadorItem>()
             .ToTable("Trabajadores");
 
-            builder.Entity<ClienteRolItem>()
+            builder.Entity<RolItem>()
             .ToTable("Roles");
 
-            builder.Entity<RolItem>()
-            .ToTable("ClientesRoles");
+            builder.Entity<TipoClienteItem>()
+            .ToTable("TipoClientes");
         }
     }
     public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>
