@@ -14,10 +14,10 @@ namespace Entities.Entities
         public int Id { get; set; }
         public Guid IdWeb { get; set; }
         public DateTime FechaPedido { get; set; }
-        [ForeignKey("Producto")]
+        
         public int IdProducto { get; set; }
-        [ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
+        
+        public int IdCliente { get; set; }
 
         public int Cantidad { get; set; }
         public decimal ImporteTotal { get; private set; }

@@ -18,7 +18,7 @@ namespace Entities.Entities
         public string Dirección { get; set; }
         public string Población { get; set; }
         public string Provincia { get; set; }
-        public string CódigoPostal { get; set; }
+        public int CódigoPostal { get; set; }
         public string Teléfono { get; set; }
         public string Email { get; set; }
         public DateTime InsertDate { get; set; }

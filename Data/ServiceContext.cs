@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -14,12 +15,13 @@ namespace Data
 {
     public class ServiceContext: DbContext
     {
+  
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductoItem> Productos { get; set; }
         public DbSet<PedidoItem> Pedidos { get; set; }
         public DbSet<PersonaItem> Personas { get; set; }
         public DbSet<UsuarioItem> Usuarios { get; set; }
-        public DbSet<TrabajadorItem> Trabajadores { get; set; }
+        public DbSet<ClienteItem> Clientes { get; set; }
         public DbSet<RolItem> Roles { get; set; }
         public DbSet<TipoClienteItem> TipoCliente { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -27,11 +29,12 @@ namespace Data
             builder.Entity<ProductoItem>()
             .ToTable("Productos");
 
-            builder.Entity<PedidoItem>()
-            .ToTable("Pedidos")
-            .HasOne<ProductoItem>()
-            .WithMany()
-            .HasForeignKey(o => o.IdProducto);
+            builder.Entity<PedidoItem>(pedido =>
+            {
+                pedido.ToTable("Pedidos");
+                pedido.HasOne<ProductoItem>().WithMany().HasForeignKey(p => p.IdProducto);
+                pedido.HasOne<ClienteItem>().WithMany().HasForeignKey(p => p.IdCliente);
+            });
 
             builder.Entity<PersonaItem>()
             .ToTable("Personas");
@@ -41,11 +44,18 @@ namespace Data
                 usuario.ToTable("Usuarios");
                 usuario.HasOne<PersonaItem>().WithMany().HasForeignKey(u => u.IdPersona);
                 usuario.HasOne<RolItem>().WithMany().HasForeignKey(u => u.IdRol);
-                //usuario.HasOne<TipoClienteItem>().WithMany().HasForeignKey(u => u.IdTipoCliente);
+
             });
 
-            builder.Entity<TrabajadorItem>()
-            .ToTable("Trabajadores");
+            builder.Entity<ClienteItem>(cliente =>
+            {
+                cliente.ToTable("Clientes");
+                cliente.HasOne<PersonaItem>().WithMany().HasForeignKey(c => c.IdPersona);
+                cliente.HasIndex(c => c.IdPersona).IsUnique();
+
+                cliente.HasOne<RolItem>().WithMany().HasForeignKey(c => c.IdRol);
+                cliente.HasOne<TipoClienteItem>().WithMany().HasForeignKey(c => c.IdTipoCliente);
+            });
 
             builder.Entity<RolItem>()
             .ToTable("Roles");
@@ -68,6 +78,12 @@ namespace Data
 
             return new ServiceContext(optionsBuilder.Options);
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
     }
+
+    
 }
 

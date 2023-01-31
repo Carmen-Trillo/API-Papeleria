@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    [Migration("20230130213754_Initial")]
+    [Migration("20230131135035_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,6 +65,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdCliente");
+
                     b.HasIndex("IdProducto");
 
                     b.ToTable("Pedidos", (string)null);
@@ -82,9 +84,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CódigoPostal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CódigoPostal")
+                        .HasColumnType("int");
 
                     b.Property<string>("DNI")
                         .IsRequired()
@@ -236,9 +237,6 @@ namespace Data.Migrations
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoCliente")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
@@ -258,31 +256,51 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdPersona");
+
+                    b.HasIndex("IdRol");
+
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Entities.TrabajadorItem", b =>
+            modelBuilder.Entity("Entities.Entities.ClienteItem", b =>
                 {
                     b.HasBaseType("Entities.Entities.PersonaItem");
+
+                    b.Property<string>("Empresa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdPersona")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
 
-                    b.Property<string>("Puesto")
+                    b.Property<int>("IdTipoCliente")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sector")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Salario")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasIndex("IdPersona");
 
-                    b.Property<int>("idUsuario")
-                        .HasColumnType("int");
+                    b.HasIndex("IdRol");
 
-                    b.ToTable("Trabajadores", (string)null);
+                    b.HasIndex("IdTipoCliente");
+
+                    b.ToTable("Clientes", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Entities.PedidoItem", b =>
                 {
+                    b.HasOne("Entities.Entities.ClienteItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Entities.ProductoItem", null)
                         .WithMany()
                         .HasForeignKey("IdProducto")
@@ -290,11 +308,44 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Entities.TrabajadorItem", b =>
+            modelBuilder.Entity("Entities.Entities.UsuarioItem", b =>
+                {
+                    b.HasOne("Entities.Entities.PersonaItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdPersona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Entities.RolItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Entities.ClienteItem", b =>
                 {
                     b.HasOne("Entities.Entities.PersonaItem", null)
                         .WithOne()
-                        .HasForeignKey("Entities.Entities.TrabajadorItem", "Id")
+                        .HasForeignKey("Entities.Entities.ClienteItem", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Entities.PersonaItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdPersona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Entities.RolItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Entities.TipoClienteItem", null)
+                        .WithMany()
+                        .HasForeignKey("IdTipoCliente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

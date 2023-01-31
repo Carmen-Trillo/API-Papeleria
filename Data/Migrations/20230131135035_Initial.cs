@@ -25,7 +25,7 @@ namespace Data.Migrations
                     Dirección = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Población = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Provincia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CódigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CódigoPostal = table.Column<int>(type: "int", nullable: false),
                     Teléfono = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -95,7 +95,6 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdPersona = table.Column<int>(type: "int", nullable: false),
                     IdRol = table.Column<int>(type: "int", nullable: false),
-                    IdTipoCliente = table.Column<int>(type: "int", nullable: false),
                     Usuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -105,25 +104,56 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Personas_IdPersona",
+                        column: x => x.IdPersona,
+                        principalTable: "Personas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Roles_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trabajadores",
+                name: "Clientes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    idUsuario = table.Column<int>(type: "int", nullable: false),
-                    Puesto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IdRol = table.Column<int>(type: "int", nullable: false)
+                    IdPersona = table.Column<int>(type: "int", nullable: false),
+                    IdRol = table.Column<int>(type: "int", nullable: false),
+                    IdTipoCliente = table.Column<int>(type: "int", nullable: false),
+                    Empresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sector = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trabajadores", x => x.Id);
+                    table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trabajadores_Personas_Id",
+                        name: "FK_Clientes_Personas_Id",
                         column: x => x.Id,
                         principalTable: "Personas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Clientes_Personas_IdPersona",
+                        column: x => x.IdPersona,
+                        principalTable: "Personas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Clientes_Roles_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Clientes_TipoClientes_IdTipoCliente",
+                        column: x => x.IdTipoCliente,
+                        principalTable: "TipoClientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -149,6 +179,12 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Pedidos", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Pedidos_Clientes_IdCliente",
+                        column: x => x.IdCliente,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Pedidos_Productos_IdProducto",
                         column: x => x.IdProducto,
                         principalTable: "Productos",
@@ -157,9 +193,39 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clientes_IdPersona",
+                table: "Clientes",
+                column: "IdPersona");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_IdRol",
+                table: "Clientes",
+                column: "IdRol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_IdTipoCliente",
+                table: "Clientes",
+                column: "IdTipoCliente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pedidos_IdCliente",
+                table: "Pedidos",
+                column: "IdCliente");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_IdProducto",
                 table: "Pedidos",
                 column: "IdProducto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_IdPersona",
+                table: "Usuarios",
+                column: "IdPersona");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_IdRol",
+                table: "Usuarios",
+                column: "IdRol");
         }
 
         /// <inheritdoc />
@@ -169,22 +235,22 @@ namespace Data.Migrations
                 name: "Pedidos");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "TipoClientes");
-
-            migrationBuilder.DropTable(
-                name: "Trabajadores");
-
-            migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "Productos");
 
             migrationBuilder.DropTable(
                 name: "Personas");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "TipoClientes");
         }
     }
 }
