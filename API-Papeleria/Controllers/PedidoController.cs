@@ -23,12 +23,12 @@ namespace API_Papeleria.Controllers
         }
 
         [HttpPost(Name = "InsertarPedido")]
-        public int Post([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] PedidoItem pedidoItem)
+        public int Post([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] NewPedidoRequest newPedidoRequest)
         {
             var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
             if (validCredentials == true)
             {
-                return _pedidoServices.InsertPedido(pedidoItem);
+                return _pedidoServices.InsertPedido(newPedidoRequest);
             }
             else
             {

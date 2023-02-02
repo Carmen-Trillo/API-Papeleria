@@ -10,21 +10,22 @@ namespace Entities.Entities
 {
     public class PedidoItem
     {
-        [Key]
         public int Id { get; set; }
         public Guid IdWeb { get; set; }
         public DateTime FechaPedido { get; set; }
-        [ForeignKey("Producto")]
+        public int IdCliente { get; set; }
+        public int IdTipoCliente { get; set; }
+
         public int IdProducto { get; set; }
-        [ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
-
+        public decimal Precio { get; set; }
+        
         public int Cantidad { get; set; }
-        public decimal ImporteTotal { get; private set; }
+        public decimal Descuento { get; set; }
+        public decimal ImporteTotal { get; set; }
 
-        public DateTime FechaEntrega { get; private set; }
-        public bool Pagado { get; private set; }
-        public bool Entregado { get; private set; }
+        public DateTime FechaEntrega { get; set; }
+        public bool Pagado { get; set; }
+        public bool Entregado { get; set; }
         public bool IsActive { get; set; }
     }
 }

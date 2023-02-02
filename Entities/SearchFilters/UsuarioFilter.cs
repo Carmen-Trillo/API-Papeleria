@@ -11,6 +11,6 @@ namespace Entities.SearchFilters
     {
         public DateTime? InsertDateFrom { get; set; }
         public DateTime? InsertDateTo { get; set; }
-        public int? IdTipoCliente { get; set; }
+
     }
 }

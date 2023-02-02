@@ -12,7 +12,6 @@ namespace Entities.Entities
         public int Id { get; set; }
         public int IdPersona { get; set; }
         public int IdRol { get; set; }
-        public int IdTipoCliente { get; set; }
         public string Usuario { get; set; }
         public string Password { get; set; }
         public DateTime InsertDate { get; set; }

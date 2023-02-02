@@ -19,7 +19,7 @@ namespace Logic.Logic
             _serviceContext = serviceContext;
         }
         public int InsertPedido(PedidoItem pedidoItem)
-        {
+        { 
             _serviceContext.Pedidos.Add(pedidoItem);
             _serviceContext.SaveChanges();
             return pedidoItem.Id;
@@ -35,7 +35,7 @@ namespace Logic.Logic
         public void DeletePedido(int id)
         {
             var pedidoToDelete = _serviceContext.Set<PedidoItem>()
-                .Where(u => u.Id == id).First();
+                .Where(p => p.Id == id).First();
 
             pedidoToDelete.IsActive = false;
 
@@ -51,37 +51,39 @@ namespace Logic.Logic
         public List<PedidoItem> GetPedidosByCriteria(PedidoFilter pedidoFilter)
         {
             var resultList = _serviceContext.Set<PedidoItem>()
-                                        .Where(u => u.IsActive == true);
+                                        .Where(p => p.IsActive == true);
 
             //.Where(u => u.Marca = productoFilter.Marca);
 
             if (pedidoFilter.InsertDateFrom != null)
             {
-                resultList = resultList.Where(u => u.FechaPedido > pedidoFilter.InsertDateFrom);
+                resultList = resultList.Where(p => p.FechaPedido > pedidoFilter.InsertDateFrom);
             }
 
             if (pedidoFilter.InsertDateTo != null)
             {
-                resultList = resultList.Where(u => u.FechaPedido < pedidoFilter.InsertDateTo);
+                resultList = resultList.Where(p => p.FechaPedido < pedidoFilter.InsertDateTo);
             }
             if (pedidoFilter.ImporteTotalDesde != null)
             {
-                resultList = resultList.Where(u => u.ImporteTotal > pedidoFilter.ImporteTotalDesde);
+                resultList = resultList.Where(p => p.ImporteTotal > pedidoFilter.ImporteTotalDesde);
             }
 
             if (pedidoFilter.ImporteTotalHasta != null)
             {
-                resultList = resultList.Where(u => u.ImporteTotal < pedidoFilter.ImporteTotalHasta);
+                resultList = resultList.Where(p => p.ImporteTotal < pedidoFilter.ImporteTotalHasta);
             }
 
             return resultList.ToList();
         }
-        /*public List<PedidoItem> GetPedidosByCliente(int IdCliente)
+        public List<PedidoItem> GetPedidosByCliente(int idCliente)
         {
-            return _serviceContext.Set<PedidoItem>()
-                .Where(u => u.IdCliente == IdCliente).First();
-                .ToList();
+            var resultList = _serviceContext.Set<PedidoItem>()
+                        .Where(p => p.IdCliente == idCliente);
+                     return resultList.ToList();
         }
+    
+        /*public List<PedidoItem> GetPedidosByCliente(int IdCliente)
         public List<PedidoItem> GetPedidosByProducto(int idClientes)
         {
 

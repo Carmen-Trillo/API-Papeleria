@@ -53,7 +53,7 @@ namespace Logic.Logic
         public List<UsuarioItem> GetUsuariosByCriteria(UsuarioFilter usuarioFilter)
         {
             var resultList = _serviceContext.Set<UsuarioItem>()
-                                .Where(u => u.IsActive == true);
+                  .Where(u => u.IsActive == true);
 
             if (usuarioFilter.InsertDateFrom != null)
             {

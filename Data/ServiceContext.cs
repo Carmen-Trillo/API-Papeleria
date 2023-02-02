@@ -14,24 +14,27 @@ namespace Data
 {
     public class ServiceContext: DbContext
     {
+  
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductoItem> Productos { get; set; }
         public DbSet<PedidoItem> Pedidos { get; set; }
         public DbSet<PersonaItem> Personas { get; set; }
         public DbSet<UsuarioItem> Usuarios { get; set; }
-        public DbSet<TrabajadorItem> Trabajadores { get; set; }
+        public DbSet<ClienteItem> Clientes { get; set; }
         public DbSet<RolItem> Roles { get; set; }
-        public DbSet<TipoClienteItem> TipoCliente { get; set; }
+        public DbSet<TipoClienteItem> TiposClientes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ProductoItem>()
             .ToTable("Productos");
 
-            builder.Entity<PedidoItem>()
-            .ToTable("Pedidos")
-            .HasOne<ProductoItem>()
-            .WithMany()
-            .HasForeignKey(o => o.IdProducto);
+            builder.Entity<PedidoItem>(pedido =>
+            {
+                pedido.ToTable("Pedidos");
+                pedido.HasOne<ProductoItem>().WithMany().HasForeignKey(p => p.IdProducto);
+                //pedido.HasOne<ProductoItem>().WithMany().HasForeignKey(p => p.Precio);
+                pedido.HasOne<ClienteItem>().WithMany().HasForeignKey(p => p.IdCliente);
+            });
 
             builder.Entity<PersonaItem>()
             .ToTable("Personas");
@@ -40,18 +43,31 @@ namespace Data
             {
                 usuario.ToTable("Usuarios");
                 usuario.HasOne<PersonaItem>().WithMany().HasForeignKey(u => u.IdPersona);
+                usuario.HasIndex(c => c.IdPersona).IsUnique();
                 usuario.HasOne<RolItem>().WithMany().HasForeignKey(u => u.IdRol);
-                //usuario.HasOne<TipoClienteItem>().WithMany().HasForeignKey(u => u.IdTipoCliente);
+
             });
 
-            builder.Entity<TrabajadorItem>()
-            .ToTable("Trabajadores");
+            builder.Entity<ClienteItem>(cliente =>
+            {
+                cliente.ToTable("Clientes");
+                cliente.HasOne<PersonaItem>().WithMany().HasForeignKey(c => c.IdPersona);
+                cliente.HasIndex(c => c.IdPersona).IsUnique();
+
+                cliente.HasOne<RolItem>().WithMany().HasForeignKey(c => c.IdRol);
+                cliente.HasOne<TipoClienteItem>().WithMany().HasForeignKey(c => c.IdTipoCliente);
+            });
 
             builder.Entity<RolItem>()
             .ToTable("Roles");
 
             builder.Entity<TipoClienteItem>()
-            .ToTable("TipoClientes");
+            .ToTable("TiposClientes");
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
     public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>
@@ -68,6 +84,9 @@ namespace Data
 
             return new ServiceContext(optionsBuilder.Options);
         }
+
     }
+
+    
 }
 
