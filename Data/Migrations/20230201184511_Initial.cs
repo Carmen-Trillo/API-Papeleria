@@ -74,7 +74,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoClientes",
+                name: "TiposClientes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -84,7 +84,7 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoClientes", x => x.Id);
+                    table.PrimaryKey("PK_TiposClientes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,53 +109,51 @@ namespace Data.Migrations
                         column: x => x.IdPersona,
                         principalTable: "Personas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Usuarios_Roles_IdRol",
                         column: x => x.IdRol,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Clientes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IdPersona = table.Column<int>(type: "int", nullable: false),
                     IdRol = table.Column<int>(type: "int", nullable: false),
                     IdTipoCliente = table.Column<int>(type: "int", nullable: false),
                     Empresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sector = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Sector = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Clientes_Personas_Id",
-                        column: x => x.Id,
-                        principalTable: "Personas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Clientes_Personas_IdPersona",
                         column: x => x.IdPersona,
                         principalTable: "Personas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Clientes_Roles_IdRol",
                         column: x => x.IdRol,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Clientes_TipoClientes_IdTipoCliente",
+                        name: "FK_Clientes_TiposClientes_IdTipoCliente",
                         column: x => x.IdTipoCliente,
-                        principalTable: "TipoClientes",
+                        principalTable: "TiposClientes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,9 +164,12 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdWeb = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdProducto = table.Column<int>(type: "int", nullable: false),
                     IdCliente = table.Column<int>(type: "int", nullable: false),
+                    IdTipoCliente = table.Column<int>(type: "int", nullable: false),
+                    IdProducto = table.Column<int>(type: "int", nullable: false),
+                    Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Descuento = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImporteTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Pagado = table.Column<bool>(type: "bit", nullable: false),
@@ -183,21 +184,20 @@ namespace Data.Migrations
                         column: x => x.IdCliente,
                         principalTable: "Clientes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Pedidos_Productos_IdProducto",
                         column: x => x.IdProducto,
                         principalTable: "Productos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_IdPersona",
                 table: "Clientes",
                 column: "IdPersona",
-                unique: true,
-                filter: "[IdPersona] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_IdRol",
@@ -253,7 +253,7 @@ namespace Data.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "TipoClientes");
+                name: "TiposClientes");
         }
     }
 }

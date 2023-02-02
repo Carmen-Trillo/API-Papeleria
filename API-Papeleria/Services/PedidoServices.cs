@@ -1,8 +1,9 @@
 ﻿using API_Papeleria.IServices;
+using API_Papeleria.Services;
 using Entities.Entities;
 using Entities.SearchFilters;
 using Logic.ILogic;
-using Logic.Logic;
+using Resource.RequestModels;
 
 namespace API_Papeleria.Services
 {
@@ -29,10 +30,12 @@ namespace API_Papeleria.Services
             return _pedidoLogic.GetPedidosByCriteria(pedidoFilter);
         }
 
-        public int InsertPedido(PedidoItem pedidoItem)
+        
+        public int InsertPedido(NewPedidoRequest newPedidoRequest)
         {
-            _pedidoLogic.InsertPedido(pedidoItem);
-            return pedidoItem.Id;
+
+            var newPedidoItem = newPedidoRequest.ToPedidoItem();
+            return _pedidoLogic.InsertPedido(newPedidoItem);
         }
 
         public void UpdatePedido(PedidoItem pedidoItem)

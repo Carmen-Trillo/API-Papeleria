@@ -32,6 +32,7 @@ namespace Data
             {
                 pedido.ToTable("Pedidos");
                 pedido.HasOne<ProductoItem>().WithMany().HasForeignKey(p => p.IdProducto);
+                //pedido.HasOne<ProductoItem>().WithMany().HasForeignKey(p => p.Precio);
                 pedido.HasOne<ClienteItem>().WithMany().HasForeignKey(p => p.IdCliente);
             });
 
@@ -61,7 +62,12 @@ namespace Data
             .ToTable("Roles");
 
             builder.Entity<TipoClienteItem>()
-            .ToTable("TipoClientes");
+            .ToTable("TiposClientes");
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
     public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>
