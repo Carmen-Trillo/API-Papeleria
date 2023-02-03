@@ -60,6 +60,19 @@ namespace APIService.Controllers
                 throw new InvalidCredentialException();
             }
         }
+        [HttpGet(Name = "MostrarProductosPorMarca")]
+        public List<ProductoItem> GetProductosByMarca([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] string marca)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _productoServices.GetProductosByMarca(marca);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
 
         [HttpPatch(Name = "ModificarProducto")]
         public void Patch([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] ProductoItem productoItem)
@@ -88,5 +101,7 @@ namespace APIService.Controllers
                 throw new InvalidCredentialException();
             }
         }
+        
     }
+
 }

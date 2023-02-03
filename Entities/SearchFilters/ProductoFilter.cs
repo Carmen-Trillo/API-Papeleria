@@ -13,6 +13,6 @@ namespace Entities.SearchFilters
         public DateTime? InsertDateTo { get; set; }
         public int? PrecioDesde { get; set; }
         public int? PrecioHasta { get; set; }
-        public string? Marca { get; set; }
+        //public string? Marca { get; set; }
     }
 }

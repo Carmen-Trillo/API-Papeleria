@@ -25,6 +25,11 @@ using Logic.Logic;
         return _productoLogic.GetProductosByCriteria(productoFilter);
     }
 
+    public List<ProductoItem> GetProductosByMarca (string marca)
+    {
+        return _productoLogic.GetProductosByMarca(marca);
+    }
+
     public void UpdateProducto(ProductoItem productoItem)
     {
         _productoLogic.UpdateProducto(productoItem);
@@ -34,5 +39,6 @@ using Logic.Logic;
     {
         _productoLogic.DeleteProducto(id);
     }
+    
 }
 

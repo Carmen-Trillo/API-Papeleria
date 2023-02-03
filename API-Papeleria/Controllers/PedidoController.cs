@@ -64,6 +64,62 @@ namespace API_Papeleria.Controllers
             }
         }
 
+        [HttpGet(Name ="MostrarPedidosPorCliente")]
+        public List<PedidoItem> GetPedidosByCliente([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] int idCliente)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetPedidosByCliente(idCliente);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpGet(Name = "MostrarPedidosPorProductos")]
+        public List<PedidoItem> GetPedidosByProducto([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] int idProducto)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetPedidosByProducto(idProducto);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpGet(Name = "MostrarPedidosPorProductosPagados")]
+        public List<PedidoItem> GetPedidosByPagados([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] bool pagado)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetPedidosByPagados(pagado);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+        [HttpGet(Name = "MostrarPedidosPorProductosEntregados")]
+        public List<PedidoItem> GetPedidosByEntregados([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] bool entregado)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _pedidoServices.GetPedidosByEntregados(entregado);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
         [HttpPatch(Name = "ModificarPedido")]
         public void Patch([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] PedidoItem pedidoItem)
         {

@@ -30,7 +30,25 @@ namespace API_Papeleria.Services
             return _pedidoLogic.GetPedidosByCriteria(pedidoFilter);
         }
 
-        
+        public List<PedidoItem> GetPedidosByCliente(int idCliente)
+        {
+            return _pedidoLogic.GetPedidosByCliente(idCliente);
+        }
+
+        public List<PedidoItem> GetPedidosByProducto(int idProducto)
+        {
+            return _pedidoLogic.GetPedidosByProducto(idProducto);
+        }
+        public List<PedidoItem> GetPedidosByPagados(bool pagado)
+        {
+            return _pedidoLogic.GetPedidosByPagados(pagado);
+        }
+        public List<PedidoItem> GetPedidosByEntregados(bool entregado)
+        {
+            return _pedidoLogic.GetPedidosByEntregados(entregado);
+        }
+
+
         public int InsertPedido(NewPedidoRequest newPedidoRequest)
         {
 

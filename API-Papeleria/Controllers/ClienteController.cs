@@ -47,6 +47,21 @@ namespace API_Papeleria.Controllers
             }
         }
 
+        [HttpGet(Name = "MostrarClientePorFiltro")]
+        public List<ClienteItem> GetClientesByCriteria([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] ClienteFilter clienteFilter)
+        {
+            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
+            if (validCredentials == true)
+            {
+                return _clienteServices.GetClientesByCriteria(clienteFilter);
+            }
+            else
+            {
+                throw new InvalidCredentialException();
+            }
+        }
+
+
         [HttpPatch(Name = "ModificarCliente")]
         public void Patch([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromBody] ClienteItem clienteItem)
         {
@@ -61,6 +76,7 @@ namespace API_Papeleria.Controllers
             }
         }
 
+
         [HttpDelete(Name = "EliminarCliente")]
         public void Delete([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] int id)
         {
@@ -68,20 +84,6 @@ namespace API_Papeleria.Controllers
             if (validCredentials == true)
             {
                 _clienteServices.DeleteCliente(id);
-            }
-            else
-            {
-                throw new InvalidCredentialException();
-            }
-        }
-
-        [HttpGet(Name = "MostrarClientePorFiltro")]
-        public List<ClienteItem> GetClientesByCriteria([FromHeader] string usuarioUsuario, [FromHeader] string usuarioPassword, [FromQuery] ClienteFilter clienteFilter)
-        {
-            var validCredentials = _securityServices.ValidateUsuarioCredentials(usuarioUsuario, usuarioPassword, 1);
-            if (validCredentials == true)
-            {
-                return _clienteServices.GetClientesByCriteria(clienteFilter);
             }
             else
             {

@@ -15,10 +15,10 @@ namespace Logic.ILogic
         void DeletePedido(int id);
         List<PedidoItem> GetAllPedidos();
         List<PedidoItem> GetPedidosByCriteria(PedidoFilter pedidoFilter);
+        List<PedidoItem> GetPedidosByCliente(int idCliente);
+        List<PedidoItem> GetPedidosByProducto(int idProducto);
 
-        /*List<PedidoItem> GetPedidosByCliente(int idClientes);
-        List<PedidoItem> GetPedidosByProducto(int idProductos);
-        List<PedidoItem> GetPedidosByPagado(PedidoFilter pedidoFilter);
-        List<PedidoItem> GetPedidosByEntregado(PedidoFilter pedidoFilter);*/
+        List<PedidoItem> GetPedidosByPagados(bool pagado);
+        List<PedidoItem> GetPedidosByEntregados(bool entregado);
     }
 }

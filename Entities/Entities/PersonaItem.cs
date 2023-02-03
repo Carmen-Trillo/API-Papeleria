@@ -19,7 +19,7 @@ namespace Entities.Entities
         public string Población { get; set; }
         public string Provincia { get; set; }
         public int CódigoPostal { get; set; }
-        public string Teléfono { get; set; }
+        public int Teléfono { get; set; }
         public string Email { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime UpdateDate { get; set; }

@@ -8,7 +8,7 @@ namespace Entities.SearchFilters
 {
     public class ClienteFilter
     {
-        public int IdTipoCliente { get; set; }
+        public bool IsActive { get; set; }
         public DateTime? InsertDateFrom { get; set; }
         public DateTime? InsertDateTo { get; set; }
     }

@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Resource.RequestModels
 {
+    //ServiceContext _serviceContext;
     public class NewPedidoRequest
     {
-
+        //public NewPedidoRequest(ServiceContext serviceContext) {
+        //    _serviceContext = serviceContext;
+        //}
+        public Guid IdWeb { get; set; }
         public DateTime FechaPedido { get; set; }
         public int IdCliente { get; set; }
         public int IdTipoCliente { get; set; }
@@ -31,23 +35,27 @@ namespace Resource.RequestModels
         {
             var pedidoItem = new PedidoItem();
 
+            pedidoItem.IdWeb = IdWeb;
             pedidoItem.FechaPedido = FechaPedido;
             pedidoItem.IdProducto = IdProducto;
             pedidoItem.IdCliente = IdCliente;
             pedidoItem.IdTipoCliente= IdTipoCliente;
             pedidoItem.Cantidad = Cantidad;
             pedidoItem.Precio= Precio;
+
+            //pedidoItem.Descuento = 0.2M * (Cantidad * Precio);
+
             if (pedidoItem.IdTipoCliente == 1)
             {
-                pedidoItem.Descuento = (10 * (Cantidad * Precio)) / 100;
+                pedidoItem.Descuento = 0.1M* (Cantidad * Precio);
             }
-            if (pedidoItem.IdTipoCliente == 2)
+            else if (pedidoItem.IdTipoCliente == 2)
             {
-                pedidoItem.Descuento = (15 * (Cantidad * Precio)) / 100;
+                pedidoItem.Descuento = 0.15M* (Cantidad * Precio);
             }
-            if (pedidoItem.IdTipoCliente == 3)
+            else if (pedidoItem.IdTipoCliente == 3)
             {
-                pedidoItem.Descuento = (20 * (Cantidad * Precio)) / 100;
+                pedidoItem.Descuento = 0.2M * (Cantidad * Precio);
             }
             else
             {
@@ -56,20 +64,21 @@ namespace Resource.RequestModels
 
             if (pedidoItem.IdTipoCliente == 1)
             {
-                pedidoItem.ImporteTotal = (90 * (Cantidad * Precio)) / 100;
+                pedidoItem.ImporteTotal = 0.9M * (Cantidad * Precio);
             }
-            if (pedidoItem.IdTipoCliente == 2)
+            else if (pedidoItem.IdTipoCliente == 2)
             {
-                pedidoItem.ImporteTotal = (85 * (Cantidad * Precio)) / 100;
+                pedidoItem.ImporteTotal = 0.85M * (Cantidad * Precio);
             }
-            if (pedidoItem.IdTipoCliente == 3)
+            else if (pedidoItem.IdTipoCliente == 3)
             {
-                pedidoItem.ImporteTotal = (80 * (Cantidad * Precio)) / 100;
+                pedidoItem.ImporteTotal = 0.8M * (Cantidad * Precio);
             }
             else
             {
                 pedidoItem.ImporteTotal = Cantidad*Precio;
             }
+            //pedidoItem.ImporteTotal = (Cantidad * Precio) - pedidoItem.Descuento;
  
             pedidoItem.FechaEntrega = FechaEntrega;
             pedidoItem.Pagado = Pagado;
@@ -77,6 +86,8 @@ namespace Resource.RequestModels
             pedidoItem.IsActive = true;
 
             return pedidoItem;
+
+            //buscas en base el producto y su precio.
         }
     }
 }

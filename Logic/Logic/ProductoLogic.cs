@@ -38,10 +38,10 @@ namespace Logic.Logic
 
         }
 
-        public void DeleteProductoMarca(string Marca)
+        public void DeleteProductoMarca(string marca)
         {
             var productoMarcaToDelete = _serviceContext.Set<ProductoItem>()
-                 .Where(u => u.Marca == Marca).First();
+                 .Where(u => u.Marca == marca).First();
 
             productoMarcaToDelete.IsActive = false;
 
@@ -83,8 +83,15 @@ namespace Logic.Logic
             return resultList.ToList();
         }
 
+        public List<ProductoItem> GetProductosByMarca(string marca)
+        {
+            var resultList = _serviceContext.Set<ProductoItem>()
+                        .Where(p => p.Marca == marca);
+            return resultList.ToList();
+        }
 
-        
+
+
     }
 }
 

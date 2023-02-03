@@ -10,5 +10,6 @@ namespace API_Papeleria.IServices
         void DeleteProducto(int id);
         List<ProductoItem> GetAllProductos();
         List<ProductoItem> GetProductosByCriteria(ProductoFilter productoFilter);
+        List<ProductoItem> GetProductosByMarca(string marca);
     }
 }

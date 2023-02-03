@@ -13,8 +13,9 @@ namespace Logic.ILogic
         int InsertProducto(ProductoItem productoItem);
         void UpdateProducto(ProductoItem productoItem);
         void DeleteProducto(int id);
-        void DeleteProductoMarca(string Marca);
+        void DeleteProductoMarca(string marca);
         List<ProductoItem> GetAllProductos();
         List<ProductoItem> GetProductosByCriteria(ProductoFilter productoFilter);
+        List<ProductoItem> GetProductosByMarca(string marca);
     }
 }

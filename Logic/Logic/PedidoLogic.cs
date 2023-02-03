@@ -19,7 +19,8 @@ namespace Logic.Logic
             _serviceContext = serviceContext;
         }
         public int InsertPedido(PedidoItem pedidoItem)
-        { 
+        {
+            //get para comprobar que el cantida pedido<=sctok, añadir el pedido y despés hacer un update que modifique el stock
             _serviceContext.Pedidos.Add(pedidoItem);
             _serviceContext.SaveChanges();
             return pedidoItem.Id;
@@ -51,9 +52,14 @@ namespace Logic.Logic
         public List<PedidoItem> GetPedidosByCriteria(PedidoFilter pedidoFilter)
         {
             var resultList = _serviceContext.Set<PedidoItem>()
-                                        .Where(p => p.IsActive == true);
+                                            .Where(p => p.IsActive == true);
+                                            //.Where(p => p.Pagado == true)
+                                            //.Where(p => p.Entregado == true);
+                                            
+            //.Where(p => p.Pagado == true);
 
-            //.Where(u => u.Marca = productoFilter.Marca);
+
+
 
             if (pedidoFilter.InsertDateFrom != null)
             {
@@ -74,33 +80,70 @@ namespace Logic.Logic
                 resultList = resultList.Where(p => p.ImporteTotal < pedidoFilter.ImporteTotalHasta);
             }
 
+            if (pedidoFilter.FechaEntregaDesde != null)
+            {
+                resultList = resultList.Where(p => p.FechaEntrega > pedidoFilter.FechaEntregaDesde);
+            }
+
+            if (pedidoFilter.FechaEntregaHasta != null)
+            {
+                resultList = resultList.Where(p => p.FechaEntrega < pedidoFilter.FechaEntregaHasta);
+            }
+
             return resultList.ToList();
+
         }
+
+        private void Where(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<PedidoItem> GetPedidosByCliente(int idCliente)
         {
             var resultList = _serviceContext.Set<PedidoItem>()
                         .Where(p => p.IdCliente == idCliente);
-                     return resultList.ToList();
+            return resultList.ToList();
         }
-    
-        /*public List<PedidoItem> GetPedidosByCliente(int IdCliente)
-        public List<PedidoItem> GetPedidosByProducto(int idClientes)
-        {
 
+        public List<PedidoItem> GetPedidosByProducto(int idProducto)
+        {
+            var resultList = _serviceContext.Set<PedidoItem>()
+                        .Where(p => p.IdProducto == idProducto);
+            return resultList.ToList();
         }
-        public List<PedidoItem> GetPedidosByPagado(PedidoFilter pedidoFilter)
-        {
 
+        public List<PedidoItem> GetPedidosByPagados(bool pagado)
+        {
+            var resultList = _serviceContext.Set<PedidoItem>()
+                                            .Where(p => p.Pagado == true);
+            var resultListNoPagados = _serviceContext.Set<PedidoItem>()
+                                            .Where(p => p.Pagado == false);
+
+            if (pagado == true)
+            {
+                return resultList.ToList();
+            }
+            else
+            {
+                return resultListNoPagados.ToList();
+            }
         }
-        public List<PedidoItem> GetPedidosByEntregado(PedidoFilter pedidoFilter)
+        public List<PedidoItem> GetPedidosByEntregados(bool entregado)
         {
+            var resultList = _serviceContext.Set<PedidoItem>()
+                                            .Where(p => p.Entregado == true);
+            var resultListNoEntregados = _serviceContext.Set<PedidoItem>()
+                                            .Where(p => p.Entregado == false);
 
-        }*/
+            if (entregado == true)
+            {
+                return resultList.ToList();
+            }
+            else
+            {
+                return resultListNoEntregados.ToList();
+            }
+        }
     }
 }
-
-//public int? IdCliente { get; set; }
-//public int? IdProducto { get; set; }
-//public DateTime? FechaEntrega { get; private set; }
-//public bool Pagado { get; private set; }
-//public bool Entregado { get; private set; }
